@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
 namespace KriptoArbitraj
@@ -6,7 +7,7 @@ namespace KriptoArbitraj
     static class State
     {
         public static List<Task> getTasks = new();
-        public static List<Order> orders = new();
+        public static ConcurrentBag<Order> ordersPile = new();
     }
 }
 

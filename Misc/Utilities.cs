@@ -1,40 +1,37 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace KriptoArbitraj
 {
     static class Utilities
     {
         public static Stopwatch Chronometer = new();
-        public static Timer Timer = new();
         public static HttpClient Client = new();
-        public static async Task GetOrdersFromApiAsync(string apiEndpoint,
+        public static void RunApiGetTasks(string apiEndpoint,
             Dictionary<CurrencySymbol[], string> pairs,
             Func<DateTime, CurrencySymbol[], string, List<Order>> unpacker)
         {
-            List<Task> tasks = new();
             foreach (var pair in pairs)
             {
-                var time = DateTime.Now;
+                var timeStamp = DateTime.Now;
                 var currencies = pair.Key;
                 var url = apiEndpoint + pair.Value;
+                var task = Task.Run(Action);
+                State.getTasks.Add(task);
                 async Task Action()
                 {
                     var response = await Utilities.Client.GetAsync(url);
                     var content = await response.Content.ReadAsStringAsync();
-                    var data = unpacker(time, currencies, content);
-                    State.orders.AddRange(data);
+                    var data = unpacker(timeStamp, currencies, content);
+                    foreach(var order in data)
+                    {
+                        State.ordersPile.Add(order);
+                    }
                 }
-                var task = Task.Run(Action);
-                tasks.Add(task);
             }
-            await Task.WhenAll(tasks);
-            return;
         }
         // }
         // public static void ArbitrageSearch(CurrencySymbol[] currencies)

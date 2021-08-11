@@ -1,14 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.Json;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Diagnostics;
 using System.Globalization;
-using static System.Console;
-using static System.Timers.Timer;
+using System.Text.Json;
 
 namespace KriptoArbitraj
 {
@@ -66,9 +59,9 @@ namespace KriptoArbitraj
             }
             return orderBook;
         }
-        public static async Task GetOrdersAsync()
+        public static void RunGetTask()
         {
-            await Utilities.GetOrdersFromApiAsync(apiEndpoint, pairs, Unpack);
+            Utilities.RunApiGetTasks(apiEndpoint, pairs, Unpack);
         }
     }
 }

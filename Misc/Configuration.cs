@@ -12,8 +12,8 @@ namespace KriptoArbitraj
         public static Decimal MinResult = 0;
 
         //refresh
-        public static bool AutoRefresh = false;
-        public static int RefreshInterval = 7500;
+        public static bool AutoRefresh = true;
+        public static int RefreshInterval = 5000;
 
         //number format
         public static int SignificantDigits = 6;
