@@ -63,7 +63,10 @@ namespace KriptoArbitraj
         }
         public static void RunGetTask()
         {
-            Utilities.RunApiGetTasks(apiEndpoint, pairSymbols, Unpack);
+            if(pairSymbols.ContainsKey(Configuration.Pair))
+            {
+                Utilities.RunApiGetTask(apiEndpoint, pairSymbols[Configuration.Pair], Unpack);
+            }
         }
     }
 }

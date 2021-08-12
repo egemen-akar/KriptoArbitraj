@@ -11,30 +11,22 @@ namespace KriptoArbitraj
     {
         public static Stopwatch Chronometer = new();
         public static HttpClient Client = new();
-        public static void RunApiGetTasks(string apiEndpoint,
-            Dictionary<CurrencyPair, string> pairSymbols,
+        public static void RunApiGetTask(string apiEndpoint, string symbol,
             Func<DateTime, CurrencyPair, string, List<Order>> unpacker)
         {
-            foreach (var pairSymbol in pairSymbols)
+            var timeStamp = DateTime.Now;
+            var url = apiEndpoint + symbol;
+            var task = Task.Run(Action);
+            State.GetTasks.Add(task);
+            async Task<List<Order>> Action()
             {
-                var timeStamp = DateTime.Now;
-                var pair = pairSymbol.Key;
-                var url = apiEndpoint + pairSymbol.Value;
-                var task = Task.Run(Action);
-                State.GetTasks.Add(task);
-                async Task Action()
-                {
-                    var response = await Utilities.Client.GetAsync(url);
-                    var content = await response.Content.ReadAsStringAsync();
-                    var data = unpacker(timeStamp, pair, content);
-                    foreach(var order in data)
-                    {
-                        State.OrdersPile.Add(order);
-                    }
-                }
+                var response = await Utilities.Client.GetAsync(url);
+                var content = await response.Content.ReadAsStringAsync();
+                var data = unpacker(timeStamp, Configuration.Pair, content);
+                return data;
             }
         }
-        
+
         // public static void FindArbitrage_Old(CurrencySymbol[] currencies)
         // {
         //     //reset list and indexes
@@ -61,14 +53,14 @@ namespace KriptoArbitraj
 
         //                 //determine if the opportunity is good enough
         //                 double currentResult = currentDelta * currentAsk.Volume;
-                        
+
         //                 if(Configuration.MinDelta < currentDelta && Configuration.MinEpsilon < currentEpsilon && Configuration.MinResult < currentResult)
         //                 {
         //                     Arbitrages.Add(opportunity);
         //                     currentBid.Volume -= currentAsk.Volume;
         //                     askindex++;
         //                 }
-                        
+
         //                 else { break; }
         //             }
 

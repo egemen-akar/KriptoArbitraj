@@ -4,8 +4,9 @@ namespace KriptoArbitraj
 {
     static class Diagnostics
     {
-        public static void Config()
+        public static void Configure()
         {
+            WriteLine("After Configure():");
             WriteLine($"pair: {Configuration.Pair}, depth: {Configuration.Depth}");
             WriteLine($"minEpsion: {Configuration.MinEpsilon}, minVolume: {Configuration.MinVolume}, minProfit: {Configuration.MinProfit}");
             Write($"autoRefresh = {Configuration.AutoRefresh}");
@@ -21,12 +22,14 @@ namespace KriptoArbitraj
         }
         public static void Reset()
         {
+            WriteLine("After Reset():");
             var taskCount = State.GetTasks.Count;
             var orderCount = State.OrdersPile.Count;
             WriteLine($"got {taskCount} tasks and {orderCount} orders");
         }
-        public static void OrderBooks()
+        public static void GetOrderBooks()
         {
+            WriteLine("After GetOrderBooks():");
             var count = State.OrdersPile.Count;
             WriteLine($"got {count} orders");
             PrintElapsed();

@@ -52,8 +52,8 @@ namespace KriptoArbitraj
                     WriteLine("Invalid selection");
                     continue;
                 }
-                CurrencySymbol primary = (CurrencySymbol)primaryIndex;
-                CurrencySymbol secondary = (CurrencySymbol)secondaryIndex;
+                CurrencySymbol primary = (CurrencySymbol) primaryIndex - 1;
+                CurrencySymbol secondary = (CurrencySymbol) secondaryIndex - 1;
                 Pair = new CurrencyPair() { Primary = primary, Secondary = secondary };
                 break;
             }
@@ -105,9 +105,9 @@ namespace KriptoArbitraj
             {
                 WriteLine("Enter depth, min epsilon, min volume, min profit seperated with one space");
                 var input = ReadLine().Split();
-                if (input.Length != 3)
+                if (input.Length != 4)
                 {
-                    WriteLine("there must be 3 parameters");
+                    WriteLine("there must be 4 parameters");
                     continue;
                 }
                 var depth = int.Parse(input[0]);
@@ -122,7 +122,13 @@ namespace KriptoArbitraj
                     WriteLine("Minimum epsilon must be non-negative");
                     continue;
                 }
-                var minpr = Decimal.Parse(input[2], NumberStyles.Float);
+                var minvol = Decimal.Parse(input[2], NumberStyles.Float);
+                if (minvol < 0)
+                {
+                    WriteLine("Minimum volume must be non-negative");
+                    continue;
+                }
+                var minpr = Decimal.Parse(input[3], NumberStyles.Float);
                 if (minpr < 0)
                 {
                     WriteLine("Minimum profit must be non-negative");
@@ -130,6 +136,7 @@ namespace KriptoArbitraj
                 }
                 Depth = depth;
                 MinEpsilon = minep;
+                MinVolume = minvol;
                 MinProfit = minpr;
                 break;
             }
