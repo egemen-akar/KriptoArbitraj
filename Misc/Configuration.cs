@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using static System.Console;
 
 namespace KriptoArbitraj
@@ -26,8 +27,12 @@ namespace KriptoArbitraj
         public static void Configure()
         {
             SetPair();
-            SetSearchParams();
-            
+            SetDiagMode();
+            if (Configuration.DiagMode == false)
+            {
+                SetSearchParams();
+                SetRefresh();
+            }
         }
         static void SetPair()
         {
@@ -71,11 +76,93 @@ namespace KriptoArbitraj
                 return -1;
             }
         }
+        static void SetDiagMode()
+        {
+            while (true)
+            {
+                WriteLine("Diag mode? (y/n)");
+                var option = ReadLine();
+                if (option == "n")
+                {
+                    Configuration.DiagMode = false;
+                    break;
+                }
+                else if (option == "y")
+                {
+                    Configuration.DiagMode = true;
+                    break;
+                }
+                else
+                {
+                    WriteLine("Invalid");
+                    continue;
+                }
+            }
+        }
         static void SetSearchParams()
         {
-            while(true)
+            while (true)
             {
                 WriteLine("Enter depth, min epsilon, min volume, min profit seperated with one space");
+                var input = ReadLine().Split();
+                if (input.Length != 3)
+                {
+                    WriteLine("there must be 3 parameters");
+                    continue;
+                }
+                var depth = int.Parse(input[0]);
+                if (depth < 1)
+                {
+                    WriteLine("Depth must be equal to or greater than 1");
+                    continue;
+                }
+                var minep = Decimal.Parse(input[1], NumberStyles.Float);
+                if (minep < 0)
+                {
+                    WriteLine("Minimum epsilon must be non-negative");
+                    continue;
+                }
+                var minpr = Decimal.Parse(input[2], NumberStyles.Float);
+                if (minpr < 0)
+                {
+                    WriteLine("Minimum profit must be non-negative");
+                    continue;
+                }
+                Depth = depth;
+                MinEpsilon = minep;
+                MinProfit = minpr;
+                break;
+            }
+        }
+        static void SetRefresh()
+        {
+            while (true)
+            {
+                WriteLine("Auto refresh? (y/n)");
+                var option = ReadLine();
+                if (option == "n")
+                {
+                    Configuration.AutoRefresh = false;
+                    break;
+                }
+                else if (option == "y")
+                {
+                    WriteLine("Interval? (in miliseconds, default = 5000)");
+                    var interval = int.Parse(ReadLine());
+                    if (interval < 3000)
+                    {
+                        WriteLine("Auto refresh interval must be at least 3000");
+                        continue;
+                    }
+                    Configuration.AutoRefresh = true;
+                    Configuration.RefreshInterval = interval;
+                    break;
+                }
+                else
+                {
+                    WriteLine("Invalid");
+                    continue;
+                }
             }
         }
     }

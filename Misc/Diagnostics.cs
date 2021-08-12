@@ -4,6 +4,21 @@ namespace KriptoArbitraj
 {
     static class Diagnostics
     {
+        public static void Config()
+        {
+            WriteLine($"pair: {Configuration.Pair}, depth: {Configuration.Depth}");
+            WriteLine($"minEpsion: {Configuration.MinEpsilon}, minVolume: {Configuration.MinVolume}, minProfit: {Configuration.MinProfit}");
+            Write($"autoRefresh = {Configuration.AutoRefresh}");
+            if(Configuration.AutoRefresh == true)
+            {
+                WriteLine($", interval: {Configuration.RefreshInterval}");
+            }
+            else
+            {
+                WriteLine();
+            }
+            WriteLine($"diagMode: {Configuration.DiagMode}");
+        }
         public static void Reset()
         {
             var taskCount = State.GetTasks.Count;

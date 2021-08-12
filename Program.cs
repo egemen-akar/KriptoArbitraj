@@ -12,6 +12,11 @@ namespace KriptoArbitraj
         {
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
             Configuration.Configure();
+            if(Configuration.DiagMode == true)
+            {
+                Diagnostics.Config();
+                await Task.Delay(Configuration.RefreshInterval);
+            }
             if (Configuration.AutoRefresh == true)
             {
                 while (true)
@@ -29,7 +34,6 @@ namespace KriptoArbitraj
                 }
             }
         }
-        
         static async Task Refresh()
         {
             Reset();
