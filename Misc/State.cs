@@ -6,8 +6,9 @@ namespace KriptoArbitraj
 {
     static class State
     {
-        public static List<Task> getTasks = new();
-        public static ConcurrentBag<Order> ordersPile = new();
+        public static List<Task> GetTasks = new();
+        public static ConcurrentBag<Order> OrdersPile = new();
+        public static List<Arbitrage> Opportunuties = new();
     }
 }
 

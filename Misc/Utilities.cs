@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace KriptoArbitraj
 {
@@ -11,36 +12,35 @@ namespace KriptoArbitraj
         public static Stopwatch Chronometer = new();
         public static HttpClient Client = new();
         public static void RunApiGetTasks(string apiEndpoint,
-            Dictionary<CurrencySymbol[], string> pairs,
-            Func<DateTime, CurrencySymbol[], string, List<Order>> unpacker)
+            Dictionary<CurrencyPair, string> pairSymbols,
+            Func<DateTime, CurrencyPair, string, List<Order>> unpacker)
         {
-            foreach (var pair in pairs)
+            foreach (var pairSymbol in pairSymbols)
             {
                 var timeStamp = DateTime.Now;
-                var currencies = pair.Key;
-                var url = apiEndpoint + pair.Value;
+                var pair = pairSymbol.Key;
+                var url = apiEndpoint + pairSymbol.Value;
                 var task = Task.Run(Action);
-                State.getTasks.Add(task);
+                State.GetTasks.Add(task);
                 async Task Action()
                 {
                     var response = await Utilities.Client.GetAsync(url);
                     var content = await response.Content.ReadAsStringAsync();
-                    var data = unpacker(timeStamp, currencies, content);
+                    var data = unpacker(timeStamp, pair, content);
                     foreach(var order in data)
                     {
-                        State.ordersPile.Add(order);
+                        State.OrdersPile.Add(order);
                     }
                 }
             }
         }
-        // }
-        // public static void ArbitrageSearch(CurrencySymbol[] currencies)
+        
+        // public static void FindArbitrage_Old(CurrencySymbol[] currencies)
         // {
         //     //reset list and indexes
-        //     Arbitrages.Clear();
+        //     State.Opportunuties.Clear();
         //     int askindex = 0;
         //     int bidindex = 0;
-
         //     while (askindex < Configuration.SearchDepth && bidindex < Configuration.SearchDepth)
         //     {
         //         //shorthand variables

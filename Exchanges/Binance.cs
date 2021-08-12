@@ -8,12 +8,11 @@ namespace KriptoArbitraj
     public static class Binance
     {
         private static string apiEndpoint = @"https://api.binance.com/api/v3/depth?symbol=";
-        private static Dictionary<CurrencySymbol[], string> pairs = new()
+        private static Dictionary<CurrencyPair, string> pairSymbols = new()
         {
-            { new[] { CurrencySymbol.BTC, CurrencySymbol.TRY }, "BTCTRY" },
-            { new[] { CurrencySymbol.ETH, CurrencySymbol.TRY }, "ETHTRY" },
-            { new[] { CurrencySymbol.USDT, CurrencySymbol.TRY }, "USDTTRY" }
-
+            { new() { Primary = CurrencySymbol.BTC,  Secondary = CurrencySymbol.TRY }, "BTCTRY" },
+            { new() { Primary = CurrencySymbol.ETH,  Secondary = CurrencySymbol.TRY }, "ETHTRY" },
+            { new() { Primary = CurrencySymbol.USDT,  Secondary = CurrencySymbol.TRY }, "USDTTRY" }
         };
         private class Dto
         {
@@ -21,7 +20,7 @@ namespace KriptoArbitraj
             public string[][] bids { get; set; }
             public string[][] asks { get; set; }
         }
-        private static List<Order> Unpack(DateTime time, CurrencySymbol[] currencies, string apiResponse)
+        private static List<Order> Unpack(DateTime time, CurrencyPair pair, string apiResponse)
         {
             List<Order> orderBook = new();
             var dto = JsonSerializer.Deserialize<Dto>(apiResponse);
@@ -34,7 +33,7 @@ namespace KriptoArbitraj
                 {
                     Exchange = ExchangeName.Binance,
                     Time = time,
-                    Pair = currencies,
+                    Pair = pair,
                     Type = OrderType.Ask,
                     Rate = rate,
                     Volume = volume
@@ -50,7 +49,7 @@ namespace KriptoArbitraj
                 {
                     Exchange = ExchangeName.Binance,
                     Time = time,
-                    Pair = currencies,
+                    Pair = pair,
                     Type = OrderType.Bid,
                     Rate = rate,
                     Volume = volume
@@ -61,7 +60,7 @@ namespace KriptoArbitraj
         }
         public static void RunGetTask()
         {
-            Utilities.RunApiGetTasks(apiEndpoint, pairs, Unpack);
+            Utilities.RunApiGetTasks(apiEndpoint, pairSymbols, Unpack);
         }
     }
 }

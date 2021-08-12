@@ -7,13 +7,13 @@ namespace KriptoArbitraj
     static class Paribu
     {
         private static readonly string apiEndpoint = @"https://v3.paribu.com/app/markets/";
-        private static Dictionary<CurrencySymbol[], string> pairs = new()
+        private static Dictionary<CurrencyPair, string> pairSymbols = new()
         {
-            { new[] { CurrencySymbol.BTC, CurrencySymbol.TRY }, "btc-tl" },
-            { new[] { CurrencySymbol.ETH, CurrencySymbol.TRY }, "eth-tl" },
-            { new[] { CurrencySymbol.USDT, CurrencySymbol.TRY }, "usdt-tl" }
+            { new() { Primary = CurrencySymbol.BTC, Secondary = CurrencySymbol.TRY }, "btc-tl" },
+            { new() { Primary = CurrencySymbol.ETH, Secondary = CurrencySymbol.TRY }, "eth-tl" },
+            { new() { Primary = CurrencySymbol.USDT, Secondary = CurrencySymbol.TRY }, "usdt-tl" }
         };
-        private static List<Order> Unpack(DateTime time, CurrencySymbol[] currencies, string apiResponse)
+        private static List<Order> Unpack(DateTime time, CurrencyPair pair, string apiResponse)
         {
             List<Order> orderBook = new();
             var words = apiResponse.Split('{', '}');
@@ -33,14 +33,14 @@ namespace KriptoArbitraj
             }
             foreach (var buyword in buywords)
             {
-                var pair = buyword.Split(':');
-                var rate = decimal.Parse(pair[0].Trim('\"'), NumberStyles.Float);
-                var volume = decimal.Parse(pair[1], NumberStyles.Float);
+                var pairWords = buyword.Split(':');
+                var rate = decimal.Parse(pairWords[0].Trim('\"'), NumberStyles.Float);
+                var volume = decimal.Parse(pairWords[1], NumberStyles.Float);
                 var order = new Order
                 {
                     Exchange = ExchangeName.Paribu,
                     Time = time,
-                    Pair = currencies,
+                    Pair = pair,
                     Type = OrderType.Ask,
                     Rate = rate,
                     Volume = volume
@@ -49,14 +49,14 @@ namespace KriptoArbitraj
             }
             foreach (var sellword in sellwords)
             {
-                var pair = sellword.Split(':');
-                var rate = decimal.Parse(pair[0].Trim('\"'), NumberStyles.Float);
-                var volume = decimal.Parse(pair[1], NumberStyles.Float);
+                var pairWords = sellword.Split(':');
+                var rate = decimal.Parse(pairWords[0].Trim('\"'), NumberStyles.Float);
+                var volume = decimal.Parse(pairWords[1], NumberStyles.Float);
                 var order = new Order
                 {
                     Exchange = ExchangeName.BtcTurk,
                     Time = time,
-                    Pair = currencies,
+                    Pair = pair,
                     Type = OrderType.Bid,
                     Rate = rate,
                     Volume = volume
@@ -68,7 +68,7 @@ namespace KriptoArbitraj
         }
         public static void RunGetTask()
         {
-            Utilities.RunApiGetTasks(apiEndpoint, pairs, Unpack);
+            Utilities.RunApiGetTasks(apiEndpoint, pairSymbols, Unpack);
         }
     }
 }

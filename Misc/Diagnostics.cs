@@ -6,22 +6,22 @@ namespace KriptoArbitraj
     {
         public static void Reset()
         {
-            var taskCount = State.getTasks.Count;
-            var orderCount = State.ordersPile.Count;
+            var taskCount = State.GetTasks.Count;
+            var orderCount = State.OrdersPile.Count;
             WriteLine($"got {taskCount} tasks and {orderCount} orders");
         }
-        public static void GetOrderBooks()
+        public static void OrderBooks()
         {
-            var count = State.ordersPile.Count;
+            var count = State.OrdersPile.Count;
             WriteLine($"got {count} orders");
             PrintElapsed();
         }
-        public static void Sorting()
+        public static void Sort()
         {
             //
             PrintElapsed();
         }
-        public static void Arbitrages()
+        public static void Arbitrage()
         {
             //
             PrintElapsed();

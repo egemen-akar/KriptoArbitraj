@@ -37,14 +37,15 @@ namespace KriptoArbitraj
             await GetOrderBooks();
             if (Configuration.DiagMode == true)
             {
-                Diagnostics.GetOrderBooks();
+                Diagnostics.OrderBooks();
             }
         }
         static void Reset()
         {
             Utilities.Chronometer.Restart();
-            State.ordersPile.Clear();
-            State.getTasks.Clear();
+            State.GetTasks.Clear();
+            State.OrdersPile.Clear();
+            State.Opportunuties.Clear();
         }
         static async Task GetOrderBooks()
         {
@@ -52,7 +53,7 @@ namespace KriptoArbitraj
             Bitci.RunGetTask();
             BtcTurk.RunGetTask();
             Paribu.RunGetTask();
-            await Task.WhenAll(State.getTasks);
+            await Task.WhenAll(State.GetTasks);
         }
     }
 }

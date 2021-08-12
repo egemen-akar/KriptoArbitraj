@@ -7,10 +7,10 @@ namespace KriptoArbitraj
     public static class Bitci
     {
         private static string apiEndpoint = @"https://api.bitci.com/api/orderbook/";
-        private static Dictionary<CurrencySymbol[], string> pairs = new()
+        private static Dictionary<CurrencyPair, string> pairSymbols = new()
         {
-            { new[] { CurrencySymbol.BTC, CurrencySymbol.TRY }, "BTC_TRY" },
-            { new[] { CurrencySymbol.ETH, CurrencySymbol.TRY }, "ETH_TRY" },
+            { new() { Primary = CurrencySymbol.BTC,  Secondary = CurrencySymbol.TRY }, "BTC_TRY" },
+            { new() { Primary = CurrencySymbol.ETH,  Secondary = CurrencySymbol.TRY }, "ETH_TRY" },
         };
         private class Dto
         {
@@ -28,7 +28,7 @@ namespace KriptoArbitraj
             public Decimal qty { get; set; }
             public Decimal price { get; set; }
         }
-        private static List<Order> Unpack(DateTime time, CurrencySymbol[] currencies, string apiResponse)
+        private static List<Order> Unpack(DateTime time, CurrencyPair pair, string apiResponse)
         {
             List<Order> orderBook = new();
             var dto = JsonSerializer.Deserialize<Dto>(apiResponse);
@@ -38,7 +38,7 @@ namespace KriptoArbitraj
                 {
                     Exchange = ExchangeName.Bitci,
                     Time = time,
-                    Pair = currencies,
+                    Pair = pair,
                     Type = OrderType.Ask,
                     Rate = ask.price,
                     Volume = ask.qty
@@ -51,7 +51,7 @@ namespace KriptoArbitraj
                 {
                     Exchange = ExchangeName.Bitci,
                     Time = time,
-                    Pair = currencies,
+                    Pair = pair,
                     Type = OrderType.Bid,
                     Rate = bid.price,
                     Volume = bid.qty
@@ -63,7 +63,7 @@ namespace KriptoArbitraj
         }
         public static void RunGetTask()
         {
-            Utilities.RunApiGetTasks(apiEndpoint, pairs, Unpack);
+            Utilities.RunApiGetTasks(apiEndpoint, pairSymbols, Unpack);
         }
     }
 }
