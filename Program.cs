@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 
 using static System.Console;
@@ -10,6 +11,7 @@ namespace KriptoArbitraj
         static async Task Main()
         {
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
+            Configuration.Configure();
             if (Configuration.AutoRefresh == true)
             {
                 while (true)
@@ -27,6 +29,7 @@ namespace KriptoArbitraj
                 }
             }
         }
+        
         static async Task Refresh()
         {
             Reset();
