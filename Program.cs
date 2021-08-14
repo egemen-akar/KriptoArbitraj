@@ -46,6 +46,12 @@ namespace KriptoArbitraj
             {
                 Diagnostics.GetOrderBooks();
             }
+            Utilities.FindArbitrage();
+            if (Configuration.DiagMode == true)
+            {
+                Diagnostics.Arbitrage();
+            }
+            PrintOpportunuties();
         }
         static void Reset()
         {
@@ -66,6 +72,14 @@ namespace KriptoArbitraj
                 var finishedTask = await Task.WhenAny(State.GetTasks);
                 State.OrdersPile.AddRange(finishedTask.Result);
                 State.GetTasks.Remove(finishedTask);
+            }
+        }
+        static void PrintOpportunuties()
+        {
+            foreach(var opportunity in State.Opportunuties)
+            {
+                Console.WriteLine(opportunity);
+                
             }
         }
     }

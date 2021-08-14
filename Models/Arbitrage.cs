@@ -6,10 +6,10 @@ namespace KriptoArbitraj
 {
     public class Arbitrage
     {
-        public Decimal Delta { get; }
-        public Decimal Epsilon { get; }
-        public Decimal Profit { get; }
-        public List<Action> Actions { get; }
+        public Decimal Delta { get; init; }
+        public Decimal Epsilon { get; init; }
+        public Decimal Profit { get; init; }
+        public List<Action> Actions { get; init; }
         public override String ToString()
         {
             StringBuilder sb = new();
@@ -26,15 +26,14 @@ namespace KriptoArbitraj
     }
     public class Action
     {
-        public ActionType Type { get; }
-        public ExchangeName Exchange { get; }
-        public CurrencySymbol[] Pair { get; }
-        public Decimal Volume { get; }
+        public ActionType Type { get; init; }
+        public ExchangeName Exchange { get; init; }
+        public Decimal Volume { get; init; }
         public override String ToString()
         {
             StringBuilder sb = new();
             var volStr = Volume.ToCompactString();
-            sb.AppendFormat($"In {Exchange}: {Type} {volStr} {Pair[0]} in exchange to {Pair[1]}");
+            sb.AppendFormat($"In {Exchange}: {Type} {volStr} {Configuration.Pair.Primary} in exchange to {Configuration.Pair.Secondary}");
             return sb.ToString(); 
         }
     }

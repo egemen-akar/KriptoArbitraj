@@ -9,6 +9,7 @@ namespace KriptoArbitraj
         public static CurrencyPair Pair;
         //search
         public static int Depth = 5;
+        public static Decimal MinDelta = 0;
         public static Decimal MinEpsilon = 0;
         public static Decimal MinVolume = 0;
         public static Decimal MinProfit = 0;
@@ -52,8 +53,8 @@ namespace KriptoArbitraj
                     WriteLine("Invalid selection");
                     continue;
                 }
-                CurrencySymbol primary = (CurrencySymbol) primaryIndex - 1;
-                CurrencySymbol secondary = (CurrencySymbol) secondaryIndex - 1;
+                CurrencySymbol primary = (CurrencySymbol)primaryIndex;
+                CurrencySymbol secondary = (CurrencySymbol)secondaryIndex;
                 Pair = new CurrencyPair() { Primary = primary, Secondary = secondary };
                 break;
             }
@@ -66,7 +67,7 @@ namespace KriptoArbitraj
                 WriteLine($"{index} : {currency}");
                 index++;
             }
-            int selected = int.Parse(ReadLine());
+            int selected = int.Parse(ReadLine()) - 1;
             if (Enum.IsDefined(typeof(CurrencySymbol), selected))
             {
                 return selected;
@@ -103,36 +104,65 @@ namespace KriptoArbitraj
         {
             while (true)
             {
-                WriteLine("Enter depth, min epsilon, min volume, min profit seperated with one space");
-                var input = ReadLine().Split();
-                if (input.Length != 4)
+                int depth;
+                decimal minep;
+                decimal mindel;
+                decimal minvol;
+                decimal minpr;
+                WriteLine("Enter depth");
+                while (true)
                 {
-                    WriteLine("there must be 4 parameters");
-                    continue;
+                    depth = int.Parse(ReadLine());
+                    if (depth < 1)
+                    {
+                        WriteLine("Depth must be equal to or greater than 1");
+                        continue;
+                    }
+                    break;
                 }
-                var depth = int.Parse(input[0]);
-                if (depth < 1)
+                WriteLine("Enter minimum epsilon");
+                while (true)
                 {
-                    WriteLine("Depth must be equal to or greater than 1");
-                    continue;
+                    minep = Decimal.Parse(ReadLine(), NumberStyles.Float);
+                    if (minep < 0)
+                    {
+                        WriteLine("Minimum epsilon must be non-negative");
+                        continue;
+                    }
+                    break;
                 }
-                var minep = Decimal.Parse(input[1], NumberStyles.Float);
-                if (minep < 0)
+                WriteLine("Enter minimum delta");
+                while (true)
                 {
-                    WriteLine("Minimum epsilon must be non-negative");
-                    continue;
+                    mindel = Decimal.Parse(ReadLine(), NumberStyles.Float);
+                    if (mindel < 0)
+                    {
+                        WriteLine("Minimum delta must be non-negative");
+                        continue;
+                    }
+                    break;
                 }
-                var minvol = Decimal.Parse(input[2], NumberStyles.Float);
-                if (minvol < 0)
+                WriteLine("Enter minimum volume");
+                while (true)
                 {
-                    WriteLine("Minimum volume must be non-negative");
-                    continue;
+                    minvol = Decimal.Parse(ReadLine(), NumberStyles.Float);
+                    if (minvol < 0)
+                    {
+                        WriteLine("Minimum volume must be non-negative");
+                        continue;
+                    }
+                    break;
                 }
-                var minpr = Decimal.Parse(input[3], NumberStyles.Float);
-                if (minpr < 0)
+                WriteLine("Enter minimum profit");
+                while (true)
                 {
-                    WriteLine("Minimum profit must be non-negative");
-                    continue;
+                    minpr = Decimal.Parse(ReadLine(), NumberStyles.Float);
+                    if (minpr < 0)
+                    {
+                        WriteLine("Minimum profit must be non-negative");
+                        continue;
+                    }
+                    break;
                 }
                 Depth = depth;
                 MinEpsilon = minep;
