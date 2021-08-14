@@ -5,12 +5,12 @@ namespace KriptoArbitraj
 {
     public class Order
     {
-        public ExchangeName Exchange { get; init; }
-        public DateTime Time { get; init; }
-        public CurrencyPair Pair { get; init; }
-        public OrderType Type { get; init; }
-        public Decimal Rate { get; init; }
-        public Decimal Volume { get; init; }
+        public ExchangeName Exchange;
+        public DateTime Time;
+        public CurrencyPair Pair;
+        public OrderType Type;
+        public Decimal Rate;
+        public Decimal Volume;
         public override String ToString()
         {
             StringBuilder sb = new();
@@ -21,10 +21,10 @@ namespace KriptoArbitraj
             return sb.ToString();
         }
     }
-    public readonly struct CurrencyPair
+    public struct CurrencyPair
     {
-        public CurrencySymbol Primary { get; init; }
-        public readonly CurrencySymbol Secondary { get; init; }
+        public CurrencySymbol Primary;
+        public CurrencySymbol Secondary;
         public override String ToString()
         {
             return $"{Primary}-{Secondary}";

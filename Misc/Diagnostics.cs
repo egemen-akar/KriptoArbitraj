@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using static System.Console;
 
 namespace KriptoArbitraj
@@ -34,9 +35,18 @@ namespace KriptoArbitraj
             WriteLine($"got {count} orders");
             PrintElapsed();
         }
-        public static void Sort()
+        public static void Sort(List<Order> askRanking, List<Order> bidRanking)
         {
-            //
+            WriteLine("Asks:");
+            foreach(var ask in askRanking)
+            {
+                WriteLine(ask);
+            }
+            WriteLine("Bids:");
+            foreach(var bid in bidRanking)
+            {
+                WriteLine(bid);
+            }
             PrintElapsed();
         }
         public static void Arbitrage()

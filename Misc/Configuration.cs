@@ -8,14 +8,14 @@ namespace KriptoArbitraj
     {
         public static CurrencyPair Pair;
         //search
-        public static int Depth = 5;
+        public static int Depth = 3;
         public static Decimal MinDelta = 0;
         public static Decimal MinEpsilon = 0;
         public static Decimal MinVolume = 0;
         public static Decimal MinProfit = 0;
         //refresh
         public static bool AutoRefresh = false;
-        public static int RefreshInterval = 5000;
+        public static int RefreshInterval = 10000;
         //number format
         public static int SignificantDigits = 6;
         public static string RealFormat = "G" + SignificantDigits.ToString();
@@ -184,7 +184,7 @@ namespace KriptoArbitraj
                 }
                 else if (option == "y")
                 {
-                    WriteLine("Interval? (in miliseconds, default = 5000)");
+                    WriteLine("Interval? (in miliseconds)");
                     var interval = int.Parse(ReadLine());
                     if (interval < 3000)
                     {

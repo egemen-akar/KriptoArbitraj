@@ -1,15 +1,15 @@
 using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Text;
 
 namespace KriptoArbitraj
 {
     public class Arbitrage
     {
-        public Decimal Delta { get; init; }
-        public Decimal Epsilon { get; init; }
-        public Decimal Profit { get; init; }
-        public List<Action> Actions { get; init; }
+        public Decimal Delta;
+        public Decimal Epsilon;
+        public Decimal Profit;
+        public List<Action> Actions;
         public override String ToString()
         {
             StringBuilder sb = new();
@@ -26,9 +26,9 @@ namespace KriptoArbitraj
     }
     public class Action
     {
-        public ActionType Type { get; init; }
-        public ExchangeName Exchange { get; init; }
-        public Decimal Volume { get; init; }
+        public ActionType Type;
+        public ExchangeName Exchange;
+        public Decimal Volume;
         public override String ToString()
         {
             StringBuilder sb = new();

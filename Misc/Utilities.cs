@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace KriptoArbitraj
 {
@@ -26,7 +26,6 @@ namespace KriptoArbitraj
                 return data;
             }
         }
-
         public static void FindArbitrage()
         {
             //reset list and indexes
@@ -45,7 +44,7 @@ namespace KriptoArbitraj
                 .ToList();
             if(Configuration.DiagMode == true)
             {
-                Diagnostics.Sort();
+                Diagnostics.Sort(askRanking, bidRanking);
             }
             int askindex = 0;
             int bidindex = 0;
@@ -100,6 +99,8 @@ namespace KriptoArbitraj
                                     Actions = new() { firstAction, secondAction }
                                 };
                                 State.Opportunuties.Add(opportunity);
+                                currentAsk.Volume -= profitableVol;
+                                currentBid.Volume -= profitableVol;
                             }
                         }
                         else
@@ -134,11 +135,14 @@ namespace KriptoArbitraj
                                     Actions = new() { firstAction, secondAction }
                                 };
                                 State.Opportunuties.Add(opportunity);
+                                currentBid.Volume -= profitableVol;
+                                currentAsk.Volume -= profitableVol;
                             }
                         }
                     }
                     bidindex++;
                 }
+                bidindex = 0;
                 askindex++;
             }
             State.Opportunuties = (from opportunity in State.Opportunuties
