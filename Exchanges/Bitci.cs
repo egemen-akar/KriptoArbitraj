@@ -20,12 +20,12 @@ namespace KriptoArbitraj
         }
         private class Ask
         {
-            public Decimal qty { get; set; }
+            public Decimal quantity { get; set; }
             public Decimal price { get; set; }
         }
         private class Bid
         {
-            public Decimal qty { get; set; }
+            public Decimal quantity { get; set; }
             public Decimal price { get; set; }
         }
         private static List<Order> Unpack(DateTime time, CurrencyPair pair, string apiResponse)
@@ -41,7 +41,7 @@ namespace KriptoArbitraj
                     Pair = pair,
                     Type = OrderType.Ask,
                     Rate = ask.price,
-                    Volume = ask.qty
+                    Volume = ask.quantity
                 };
                 orderBook.Add(order);
             }
@@ -54,7 +54,7 @@ namespace KriptoArbitraj
                     Pair = pair,
                     Type = OrderType.Bid,
                     Rate = bid.price,
-                    Volume = bid.qty
+                    Volume = bid.quantity
                 };
                 orderBook.Add(order);
             }

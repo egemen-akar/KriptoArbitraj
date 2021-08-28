@@ -41,7 +41,7 @@ namespace KriptoArbitraj
                     Exchange = ExchangeName.Paribu,
                     Time = time,
                     Pair = pair,
-                    Type = OrderType.Ask,
+                    Type = OrderType.Bid,
                     Rate = rate,
                     Volume = volume
                 };
@@ -54,10 +54,10 @@ namespace KriptoArbitraj
                 var volume = decimal.Parse(pairWords[1], NumberStyles.Float);
                 var order = new Order
                 {
-                    Exchange = ExchangeName.BtcTurk,
+                    Exchange = ExchangeName.Paribu,
                     Time = time,
                     Pair = pair,
-                    Type = OrderType.Bid,
+                    Type = OrderType.Ask,
                     Rate = rate,
                     Volume = volume
                 };
