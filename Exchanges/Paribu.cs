@@ -9,9 +9,10 @@ namespace KriptoArbitraj
         private static readonly string apiEndpoint = @"https://v3.paribu.com/app/markets/";
         private static Dictionary<CurrencyPair, string> pairSymbols = new()
         {
-            { new() { Primary = CurrencySymbol.BTC, Secondary = CurrencySymbol.TRY }, "btc-tl" },
-            { new() { Primary = CurrencySymbol.ETH, Secondary = CurrencySymbol.TRY }, "eth-tl" },
-            { new() { Primary = CurrencySymbol.USDT, Secondary = CurrencySymbol.TRY }, "usdt-tl" }
+            { new() { Primary = CurrencySymbol.BTC, Secondary = CurrencySymbol.TRY }, "btc-try" },
+            { new() { Primary = CurrencySymbol.ETH, Secondary = CurrencySymbol.TRY }, "eth-try" },
+            { new() { Primary = CurrencySymbol.USDT, Secondary = CurrencySymbol.TRY }, "usdt-try" },
+            { new() { Primary = CurrencySymbol.HOT, Secondary = CurrencySymbol.TRY }, "hot-try" }
         };
         private static List<Order> Unpack(DateTime time, CurrencyPair pair, string apiResponse)
         {

@@ -28,6 +28,9 @@ namespace KriptoArbitraj
         }
         public static void FindArbitrage()
         {
+            //check if pull operation found some orders
+            if(State.OrdersPile.Count < 2) return;
+
             //reset list and indexes
             State.Opportunuties.Clear();
             var askRanking = (from orders in State.OrdersPile

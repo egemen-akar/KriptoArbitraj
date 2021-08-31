@@ -11,6 +11,8 @@ namespace KriptoArbitraj
         {
             { new() { Primary = CurrencySymbol.BTC,  Secondary = CurrencySymbol.TRY }, "BTC_TRY" },
             { new() { Primary = CurrencySymbol.ETH,  Secondary = CurrencySymbol.TRY }, "ETH_TRY" },
+            //USDT not available
+            { new() { Primary = CurrencySymbol.HOT, Secondary = CurrencySymbol.TRY }, "HOT_TRY" },
         };
         private class Dto
         {
