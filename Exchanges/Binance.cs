@@ -13,7 +13,11 @@ namespace KriptoArbitraj
             { new() { Primary = CurrencySymbol.BTC,  Secondary = CurrencySymbol.TRY }, "BTCTRY" },
             { new() { Primary = CurrencySymbol.ETH,  Secondary = CurrencySymbol.TRY }, "ETHTRY" },
             { new() { Primary = CurrencySymbol.USDT,  Secondary = CurrencySymbol.TRY }, "USDTTRY" },
-            { new() { Primary = CurrencySymbol.HOT,  Secondary = CurrencySymbol.TRY }, "HOTTRY" }
+            { new() { Primary = CurrencySymbol.HOT,  Secondary = CurrencySymbol.TRY }, "HOTTRY" },
+            { new() { Primary = CurrencySymbol.LINK,  Secondary = CurrencySymbol.TRY }, "LINKTRY" },
+            { new() { Primary = CurrencySymbol.XRP,  Secondary = CurrencySymbol.TRY }, "XRPTRY" },
+            { new() { Primary = CurrencySymbol.ADA,  Secondary = CurrencySymbol.TRY }, "ADATRY" }
+            
         };
         private class Dto
         {
