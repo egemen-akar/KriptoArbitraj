@@ -7,12 +7,15 @@ namespace KriptoArbitraj
     static class Paribu
     {
         private static readonly string apiEndpoint = @"https://v3.paribu.com/app/markets/";
-        private static Dictionary<CurrencyPair, string> pairSymbols = new()
+        private static readonly Dictionary<CurrencyPair, string> pairSymbols = new()
         {
             { new() { Primary = CurrencySymbol.BTC, Secondary = CurrencySymbol.TRY }, "btc-try" },
             { new() { Primary = CurrencySymbol.ETH, Secondary = CurrencySymbol.TRY }, "eth-try" },
             { new() { Primary = CurrencySymbol.USDT, Secondary = CurrencySymbol.TRY }, "usdt-try" },
-            { new() { Primary = CurrencySymbol.HOT, Secondary = CurrencySymbol.TRY }, "hot-try" }
+            { new() { Primary = CurrencySymbol.HOT, Secondary = CurrencySymbol.TRY }, "hot-try" },
+            { new() { Primary = CurrencySymbol.LINK, Secondary = CurrencySymbol.TRY }, "link-try" },
+            { new() { Primary = CurrencySymbol.XRP, Secondary = CurrencySymbol.TRY }, "xrp-try" },
+            { new() { Primary = CurrencySymbol.ADA, Secondary = CurrencySymbol.TRY }, "ada-try" }
         };
         private static List<Order> Unpack(DateTime time, CurrencyPair pair, string apiResponse)
         {
@@ -27,7 +30,7 @@ namespace KriptoArbitraj
                 buywords = words[index + 1].Split(',');
                 sellwords = words[index + 3].Split(',');
             }
-            else if(words[index].Contains("sell") && words[index + 2].Contains("buy"))
+            else if (words[index].Contains("sell") && words[index + 2].Contains("buy"))
             {
                 buywords = words[index + 3].Split(',');
                 sellwords = words[index + 1].Split(',');
@@ -69,7 +72,7 @@ namespace KriptoArbitraj
         }
         public static void RunGetTask()
         {
-            if(pairSymbols.ContainsKey(Configuration.Pair))
+            if (pairSymbols.ContainsKey(Configuration.Pair))
             {
                 Utilities.RunApiGetTask(apiEndpoint, pairSymbols[Configuration.Pair], Unpack);
             }

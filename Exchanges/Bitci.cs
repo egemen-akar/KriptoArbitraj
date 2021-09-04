@@ -6,13 +6,16 @@ namespace KriptoArbitraj
 {
     public static class Bitci
     {
-        private static string apiEndpoint = @"https://api.bitci.com/api/orderbook/";
-        private static Dictionary<CurrencyPair, string> pairSymbols = new()
+        private static readonly string apiEndpoint = @"https://api.bitci.com/api/orderbook/";
+        private static readonly Dictionary<CurrencyPair, string> pairSymbols = new()
         {
-            { new() { Primary = CurrencySymbol.BTC,  Secondary = CurrencySymbol.TRY }, "BTC_TRY" },
-            { new() { Primary = CurrencySymbol.ETH,  Secondary = CurrencySymbol.TRY }, "ETH_TRY" },
+            { new() { Primary = CurrencySymbol.BTC, Secondary = CurrencySymbol.TRY }, "BTC_TRY" },
+            { new() { Primary = CurrencySymbol.ETH, Secondary = CurrencySymbol.TRY }, "ETH_TRY" },
             //USDT not available
             { new() { Primary = CurrencySymbol.HOT, Secondary = CurrencySymbol.TRY }, "HOT_TRY" },
+            { new() { Primary = CurrencySymbol.LINK, Secondary = CurrencySymbol.TRY }, "LINKTRY" },
+            { new() { Primary = CurrencySymbol.XRP, Secondary = CurrencySymbol.TRY }, "XRPTRY" },
+            { new() { Primary = CurrencySymbol.ADA, Secondary = CurrencySymbol.TRY }, "ADATRY" }
         };
         private class Dto
         {
@@ -65,7 +68,7 @@ namespace KriptoArbitraj
         }
         public static void RunGetTask()
         {
-            if(pairSymbols.ContainsKey(Configuration.Pair))
+            if (pairSymbols.ContainsKey(Configuration.Pair))
             {
                 Utilities.RunApiGetTask(apiEndpoint, pairSymbols[Configuration.Pair], Unpack);
             }

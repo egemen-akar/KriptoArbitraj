@@ -7,17 +7,17 @@ namespace KriptoArbitraj
 {
     public static class Binance
     {
-        private static string apiEndpoint = @"https://api.binance.com/api/v3/depth?symbol=";
-        private static Dictionary<CurrencyPair, string> pairSymbols = new()
+        private static readonly string apiEndpoint = @"https://api.binance.com/api/v3/depth?symbol=";
+        private static readonly Dictionary<CurrencyPair, string> pairSymbols = new()
         {
-            { new() { Primary = CurrencySymbol.BTC,  Secondary = CurrencySymbol.TRY }, "BTCTRY" },
-            { new() { Primary = CurrencySymbol.ETH,  Secondary = CurrencySymbol.TRY }, "ETHTRY" },
-            { new() { Primary = CurrencySymbol.USDT,  Secondary = CurrencySymbol.TRY }, "USDTTRY" },
-            { new() { Primary = CurrencySymbol.HOT,  Secondary = CurrencySymbol.TRY }, "HOTTRY" },
-            { new() { Primary = CurrencySymbol.LINK,  Secondary = CurrencySymbol.TRY }, "LINKTRY" },
-            { new() { Primary = CurrencySymbol.XRP,  Secondary = CurrencySymbol.TRY }, "XRPTRY" },
-            { new() { Primary = CurrencySymbol.ADA,  Secondary = CurrencySymbol.TRY }, "ADATRY" }
-            
+            { new() { Primary = CurrencySymbol.BTC, Secondary = CurrencySymbol.TRY }, "BTCTRY" },
+            { new() { Primary = CurrencySymbol.ETH, Secondary = CurrencySymbol.TRY }, "ETHTRY" },
+            { new() { Primary = CurrencySymbol.USDT, Secondary = CurrencySymbol.TRY }, "USDTTRY" },
+            { new() { Primary = CurrencySymbol.HOT, Secondary = CurrencySymbol.TRY }, "HOTTRY" },
+            { new() { Primary = CurrencySymbol.LINK, Secondary = CurrencySymbol.TRY }, "LINKTRY" },
+            { new() { Primary = CurrencySymbol.XRP, Secondary = CurrencySymbol.TRY }, "XRPTRY" },
+            { new() { Primary = CurrencySymbol.ADA, Secondary = CurrencySymbol.TRY }, "ADATRY" }
+
         };
         private class Dto
         {
@@ -65,7 +65,7 @@ namespace KriptoArbitraj
         }
         public static void RunGetTask()
         {
-            if(pairSymbols.ContainsKey(Configuration.Pair))
+            if (pairSymbols.ContainsKey(Configuration.Pair))
             {
                 Utilities.RunApiGetTask(apiEndpoint, pairSymbols[Configuration.Pair], Unpack);
             }

@@ -7,12 +7,15 @@ namespace KriptoArbitraj
 {
     public static class BtcTurk
     {
-        private static string apiEndpoint = @"https://api.btcturk.com/api/v2/orderbook?pairSymbol=";
-        private static Dictionary<CurrencyPair, string> pairSymbols = new()
+        private static readonly string apiEndpoint = @"https://api.btcturk.com/api/v2/orderbook?pairSymbol=";
+        private static readonly Dictionary<CurrencyPair, string> pairSymbols = new()
         {
-            { new() { Primary = CurrencySymbol.BTC,  Secondary = CurrencySymbol.TRY }, "BTC_TRY" },
-            { new() { Primary = CurrencySymbol.ETH,  Secondary = CurrencySymbol.TRY }, "ETH_TRY" },
-            { new() { Primary = CurrencySymbol.USDT,  Secondary = CurrencySymbol.TRY }, "USDT_TRY" }
+            { new() { Primary = CurrencySymbol.BTC, Secondary = CurrencySymbol.TRY }, "BTC_TRY" },
+            { new() { Primary = CurrencySymbol.ETH, Secondary = CurrencySymbol.TRY }, "ETH_TRY" },
+            { new() { Primary = CurrencySymbol.USDT, Secondary = CurrencySymbol.TRY }, "USDT_TRY" },
+            { new() { Primary = CurrencySymbol.LINK, Secondary = CurrencySymbol.TRY }, "LINK_TRY" },
+            { new() { Primary = CurrencySymbol.XRP, Secondary = CurrencySymbol.TRY }, "XRP_TRY" },
+            { new() { Primary = CurrencySymbol.ADA, Secondary = CurrencySymbol.TRY }, "ADA_TRY" }
         };
         private class Dto
         {
@@ -67,7 +70,7 @@ namespace KriptoArbitraj
         }
         public static void RunGetTask()
         {
-            if(pairSymbols.ContainsKey(Configuration.Pair))
+            if (pairSymbols.ContainsKey(Configuration.Pair))
             {
                 Utilities.RunApiGetTask(apiEndpoint, pairSymbols[Configuration.Pair], Unpack);
             }
