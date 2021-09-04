@@ -30,7 +30,7 @@ namespace KriptoArbitraj
             return $"{Primary}-{Secondary}";
         }
     }
-    public enum CurrencySymbol { TRY, USD, BTC, ETH, USDT, HOT }
+    public enum CurrencySymbol { TRY, USD, BTC, ETH, USDT, HOT, LINK, XRP, ADA }
     public enum ExchangeName { Binance, Bitci, BtcTurk, Paribu }
     public enum OrderType { Ask, Bid }
 }
